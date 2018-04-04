@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ReactNative, {Text, ListView, FlatList,ScrollView, StyleSheet, View, NativeModules,} from 'react-native';
+import ReactNative, {Text, ListView, FlatList, ScrollView, StyleSheet, View, NativeModules,} from 'react-native';
 import merge from 'merge';
 import PropTypes from 'prop-types';
 
@@ -13,7 +13,6 @@ export default class SectionListView extends Component {
 
     constructor(props, context) {
         super(props, context);
-
         this.state = {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2,
@@ -46,7 +45,7 @@ export default class SectionListView extends Component {
     componentDidMount() {
         // push measuring into the next tick
         setTimeout(() => {
-            UIManager.measure(ReactNative.findNodeHandle(this.refs.view), (x,y,w,h) => {
+            UIManager.measure(ReactNative.findNodeHandle(this.refs.view), (x, y, w, h) => {
                 this.containerHeight = h;
                 if (this.props.contentInset && this.props.data && this.props.data.length > 0) {
                     this.scrollToSection(Object.keys(this.props.data)[0]);
@@ -79,6 +78,7 @@ export default class SectionListView extends Component {
 
                 return carry;
             }, 0);
+
     }
 
     updateTagInSectionMap(tag, section) {
@@ -94,7 +94,7 @@ export default class SectionListView extends Component {
         let headerHeight = this.props.headerHeight || 0;
         y += headerHeight;
 
-        if(this.props.contentInset) {
+        if (this.props.contentInset) {
             y -= this.props.contentInset.top - headerHeight
         }
 
@@ -117,11 +117,12 @@ export default class SectionListView extends Component {
             const maxY = this.totalHeight - this.containerHeight + headerHeight;
             y = y > maxY ? maxY : y;
 
-            this.refs.listview.scrollTo({ x:0, y, animated: true });
+            this.refs.listview.scrollTo({x: 0, y, animated: true});
         } else {
-            UIManager.measureLayout(this.cellTagMap[section], ReactNative.findNodeHandle(this.refs.listview), () => {}, (x, y, w, h) => {
+            UIManager.measureLayout(this.cellTagMap[section], ReactNative.findNodeHandle(this.refs.listview), () => {
+            }, (x, y, w, h) => {
                 y = y - this.props.sectionHeaderHeight;
-                this.refs.listview.scrollTo({ x:0, y, animated: true });
+                this.refs.listview.scrollTo({x: 0, y, animated: true});
             });
         }
 
@@ -150,20 +151,31 @@ export default class SectionListView extends Component {
 
     renderFooter() {
         const Footer = this.props.footer;
-        return <Footer />;
+        return <Footer/>;
     }
 
     renderHeader() {
         const Header = this.props.header;
-        return <Header />;
+        return <Header/>;
     }
+
+    // 返回一个Item
+    renderRowItem(rowData, sectionID, rowID) {
+        return (
+            // 实例化Item
+            <View>
+                <Text style={{height: 44}}>{rowData}</Text>
+            </View>
+        )
+    }
+
 
     renderRow(item, sectionId, index) {
         const CellComponent = this.props.cell;
         index = parseInt(index, 10);
 
         const isFirst = index === 0;
-        const isLast = this.sectionItemCount && this.sectionItemCount[sectionId]-1 === index;
+        const isLast = this.sectionItemCount && this.sectionItemCount[sectionId] - 1 === index;
 
         const props = {
             isFirst,
@@ -202,7 +214,7 @@ export default class SectionListView extends Component {
     }
 
     render() {
-        const { data } = this.props;
+        const {data} = this.props;
         const dataIsArray = Array.isArray(data);
         let sectionList;
         let renderSectionHeader;
@@ -213,6 +225,7 @@ export default class SectionListView extends Component {
             sections = sections.sort(this.props.compareFunction);
         }
 
+        console.log('data', this.state.dataSource);
         if (dataIsArray) {
             dataSource = this.state.dataSource.cloneWithRows(data);
         } else {
@@ -252,12 +265,19 @@ export default class SectionListView extends Component {
 
         props.style = void 0;
 
+
         return (
             <View ref="view" style={[styles.container, this.props.style]}>
-                {/*<ListView*/}
-                    {/*ref="listview"*/}
-                    {/*{...props}*/}
-                {/*/>*/}
+                <ListView
+                    ref="listview"
+                    onScroll={this.onScroll}
+                    onScrollAnimationEnd={this.onScrollAnimationEnd}
+                    dataSource={dataSource}
+                    renderHeader={renderHeader}
+                    renderFooter={renderFooter}
+                    renderSectionHeader={renderSectionHeader}
+                    renderRow={this.renderRow}
+                />
                 {sectionList}
             </View>
         );

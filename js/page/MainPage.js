@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
-import SectionListView from "./SectionListView";
-import AlphabetListView from 'react-native-alphabetlistview';
+import AlphabetListView from "./SectionListView";
+// import AlphabetListView from 'react-native-alphabetlistview';
 
 
 export default class MainPage extends Component {
