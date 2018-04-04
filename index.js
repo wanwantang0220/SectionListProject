@@ -1,4 +1,5 @@
-import { AppRegistry } from 'react-native';
-import App from './App';
+import {AppRegistry} from 'react-native';
+import SectionListViewPage from './js/page/SectionListView';
+import MainPage from './js/page/MainPage';
 
-AppRegistry.registerComponent('SectionListProject', () => App);
+AppRegistry.registerComponent('SectionListProject', () => MainPage);
