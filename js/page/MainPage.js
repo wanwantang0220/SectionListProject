@@ -68,10 +68,13 @@ class SectionHeader extends Component {
     render() {
         // inline styles used for brevity, use a stylesheet when possible
         var textStyle = {
-            textAlign:'center',
+            textAlign:'left',
             color:'#fff',
             fontWeight:'700',
-            fontSize:16
+            fontSize:16,
+            paddingTop:5,
+            paddingBottom:5,
+            paddingLeft:10
         };
 
         var viewStyle = {
@@ -88,7 +91,7 @@ class SectionHeader extends Component {
 class SectionItem extends Component {
     render() {
         return (
-            <Text style={{color:'#f00'}}>{this.props.title}</Text>
+            <Text>{this.props.title}</Text>
         );
     }
 }

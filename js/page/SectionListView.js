@@ -159,16 +159,6 @@ export default class SectionListView extends Component {
         return <Header/>;
     }
 
-    // 返回一个Item
-    renderRowItem(rowData, sectionID, rowID) {
-        return (
-            // 实例化Item
-            <View>
-                <Text style={{height: 44}}>{rowData}</Text>
-            </View>
-        )
-    }
-
 
     renderRow(item, sectionId, index) {
         const CellComponent = this.props.cell;
@@ -227,7 +217,7 @@ export default class SectionListView extends Component {
 
         console.log('data', this.state.dataSource);
         if (dataIsArray) {
-            dataSource = this.state.dataSource.cloneWithRows(data);
+            dataSource = this.state.dataSource.cloneWithRowsAndSections(data);
         } else {
             sectionList = !this.props.hideSectionList ?
                 <SectionList
