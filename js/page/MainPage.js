@@ -6,6 +6,14 @@ import AlphabetListView from "./SectionListView";
 
 export default class MainPage extends Component {
 
+    static navigationOptions = {
+        title: '首页',
+        tabBarLabel: '首页',
+        headerTitleStyle: {
+            alignSelf: 'center'
+        },
+    };
+
     constructor(props) {
         super(props);
         this.state = {
