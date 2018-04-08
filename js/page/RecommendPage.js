@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import {StyleSheet, ScrollView, RefreshControl, Dimensions, Text, SectionList, View} from 'react-native';
+import {StyleSheet, ScrollView, RefreshControl, Dimensions, Text, Image, View} from 'react-native';
+import Swiper from 'react-native-swiper'
 import theme from '../config/theme';
 import Recommend from '../component/Recommend';
+
+
+const screenW = Dimensions.get('window').width;
+const screenH = Dimensions.get('window').height;
 
 export default class RecommendPage extends Component {
 
@@ -55,7 +60,7 @@ export default class RecommendPage extends Component {
                         tintColor={theme.themeColor}
                         title="Loading..."
                         titleColor={theme.themeColor}/>}>
-
+                {this.contentSwiper()}
                 <Text style={{color: '#ffcd32', textAlign: 'center'}}>热门歌单推荐</Text>
                 {this.contentView()}
             </ScrollView>
@@ -69,6 +74,25 @@ export default class RecommendPage extends Component {
         this.fetchData();
     }
 
+    /**
+     * 轮播图
+     */
+    contentSwiper() {
+
+        var imgUrl = 'http://y.gtimg.cn/music/photo_new/T003R720x288M000003gXZ394C6bbc.jpg';
+
+        if (!this.state.refreshing || this.state.loadedData) {
+            return (
+                <Swiper style={{height: 200, horizontal: true, autoplay: true}}>
+                    <View>
+                        <Image
+                            style={styles.image}
+                            source={{uri: {imgUrl}}}/>
+                    </View>
+                </Swiper>
+            )
+        }
+    }
 
     /**
      * 列表组件
@@ -109,7 +133,8 @@ export default class RecommendPage extends Component {
                         dissname: resList[i].dissname,
                         imgurl: resList[i].imgurl,
                         listennum: resList[i].listennum,
-                        introduction: resList[i].introduction
+                        introduction: resList[i].introduction,
+                        creator: resList[i].creator
                     }
                     dataBlob.push(info);
                 }
@@ -135,5 +160,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         paddingTop: 18,
         width: Dimensions.get('window').width - 110 // width of both buttons + no left-right padding
+    },
+    image: {
+        width: screenW,
+        height: 200
+
     }
 });
