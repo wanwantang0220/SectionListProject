@@ -1,0 +1,60 @@
+import {TabNavigator} from "react-navigation";
+import React, {Component} from 'react';
+import {StyleSheet, Image, Style, Text, Button, View} from 'react-native';
+
+import RecommendPage from "./RecommendPage";
+import SingerPage from './SingerPage';
+import RankingPage from './RankingPage';
+import SearchPage from './SearchPage';
+
+const MovieHomePage = TabNavigator({
+
+    Recommend: {
+        screen: RecommendPage,
+        navigationOptions: {
+
+        }
+    },
+    Singer:{
+        screen: SingerPage,
+        navigationOptions: {
+            title:"歌手"
+        }
+    },
+    Ranking:{
+        screen: RankingPage,
+        navigationOptions: {
+            title:"排行"
+        }
+    },
+    Search:{
+        screen: SearchPage,
+        navigationOptions: {
+            title:"搜索"
+        }
+    }
+
+},{
+    animationEnabled: true, // 切换页面时不显示动画
+    tabBarPosition: 'bottom', // 显示在底端，android 默认是显示在页面顶端的
+    swipeEnabled: false, // 是否左右滑动,如果有DrawerNavigator,最好设置为false避免手势冲突
+    backBehavior: 'none', // 按 back 键是否跳转到第一个 Tab， none 为不跳转
+    tabBarOptions: {
+        activeTintColor: '#ffcd32', // 文字和图片选中颜色
+        inactiveTintColor: '#a9a9a9', // 文字和图片默认颜色
+        showIcon: false, // android 默认不显示 icon, 需要设置为 true 才会显示
+        indicatorStyle: {height: 0}, // android 中TabBar下面会显示一条线，高度设为 0 后就不显示线了， 不知道还有没有其它方法隐藏？？？
+        style: {
+            backgroundColor: '#000000', // TabBar 背景色
+            height: 45
+        },
+        labelStyle: {
+            fontSize: 14, // 文字大小,
+            marginTop: 5,
+        },
+    },
+    mode: 'card',  // 页面切换模式, 左右是card(相当于iOS中的push效果), 上下是modal(相当于iOS中的modal效果)
+    headerMode: 'screen', // 导航栏的显示模式, screen: 有渐变透明效果, float: 无透明效果, none: 隐藏导航栏
+
+});
+module.exports = MovieHomePage;

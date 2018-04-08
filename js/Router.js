@@ -1,18 +1,16 @@
-
-import { StackNavigator } from "react-navigation";
+import {StackNavigator} from "react-navigation";
 import HomePage from "./HomePage";
-import MoviePage from "./page/MoviePage";
+import MovieHomePage from "./page/MovieHomePage";
 
 
-
-const Router =  StackNavigator({
-    Home:{
-      title:'Home',
-      screen:HomePage
+const Router = StackNavigator({
+    MovieHome: {
+        title: 'Movie',
+        screen: MovieHomePage
     },
-    Movie:{
-        title:'Movie',
-        screen:MoviePage
+    Home: {
+        title: 'Home',
+        screen: HomePage
     }
 
 
