@@ -14,10 +14,10 @@ import {
     TouchableOpacity,
     ListView,
     Dimensions,
-    ScrollView,
+    Image,
 } from 'react-native';
 import PropTypes from 'prop-types';
-
+import Toast, {DURATION} from 'react-native-easy-toast';
 
 const SECTIONHEIGHT = 30;
 const ROWHEIGHT = 40
@@ -74,7 +74,6 @@ export default class MySelectList extends Component {
 
         dataSource.map(item => {
             let key = item.findex;
-            console.log('key', key);
 
             if (dataBlob[key]) {
                 let subList = dataBlob[key];
@@ -85,7 +84,6 @@ export default class MySelectList extends Component {
                 dataBlob[key] = subList;
             }
 
-            console.log('dataBlob', dataBlob);
         });
 
 
@@ -117,13 +115,12 @@ export default class MySelectList extends Component {
         // console.log('sectionIDs', sectionIDs);
         // console.log('rowIDs', rowIDs);
         // console.log('dataBlob', dataBlob);
-        //
 
     }
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={styles.containerSelect}>
                 <View style={styles.listContainner}>
                     <ListView
                         ref={listView => this.listView = listView}
@@ -138,6 +135,14 @@ export default class MySelectList extends Component {
                         {this.state.letters.map((letter, index) => this.renderRightLetters(letter, index))}
                     </View>
                 </View>
+                <Toast
+                    ref="toast"
+                    position='top'
+                    positionValue={200}
+                    fadeInDuration={750}
+                    fadeOutDuration={1000}
+                    opacity={0.8}
+                />
             </View>
         )
     }
@@ -151,7 +156,9 @@ export default class MySelectList extends Component {
                 onPress={() => {
                     this.itemClick(item)
                 }}>
-                <View style={styles.rowdata}>
+                <View style={[styles.rowdata,{flexDirection:'row'}]}>
+                    {/*<Image style={{width: 60, height: 60}}*/}
+                           {/*source={{uri: url}}/>*/}
                     <Text style={styles.rowdatatext}>{item.fsinger_name}</Text>
                 </View>
             </TouchableOpacity>
@@ -165,7 +172,8 @@ export default class MySelectList extends Component {
 
     renderListSectionHeader(sectionData, sectionID) {
         return (
-            <View style={styles.sectionView}>
+            <View style={[styles.sectionView]}>
+
                 <Text style={styles.sectionText}>
                     {sectionData}
                 </Text>
@@ -228,15 +236,16 @@ export default class MySelectList extends Component {
         this.listView.scrollTo({
             y: position
         });
+        this.refs.toast.show(letter, DURATION.LENGTH_SHORT);
+        // this.refs.toast.show(<View><Text style={{color:'#ffcd32' , fontWeight:'bold', fontSize:16}}>{letter}</Text></View>, DURATION.LENGTH_SHORT);
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-        // paddingTop: 50,
+    containerSelect: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#F4F4F4',
+        backgroundColor: '#000000',
         // paddingTop: Platform.OS === 'ios' ? 20 : 0,  // 处理iOS状态栏
     },
     listContainner: {
@@ -246,15 +255,15 @@ const styles = StyleSheet.create({
     contentContainer: {
         flexDirection: 'row',
         width: width,
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         justifyContent: 'space-around',
         flexWrap: 'wrap',
     },
     letters: {
         position: 'absolute',
         height: height,
-        top: 0,
-        bottom: 0,
+        top: 10,
+        bottom: 10,
         right: 10,
         backgroundColor: 'transparent',
         justifyContent: 'flex-start',
@@ -277,26 +286,29 @@ const styles = StyleSheet.create({
         height: 30,
         paddingLeft: 10,
         width: width,
-        backgroundColor: '#F4F4F4',
+        backgroundColor: '#6E6E6E',
     },
     sectionText: {
         color: '#a9a9a9',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize:14
     },
     rowView: {
         height: ROWHEIGHT,
         paddingLeft: 10,
         paddingRight: 10,
-        borderBottomColor: '#F4F4F4',
+        borderBottomColor: '#ffcd32',
         borderBottomWidth: 0.5,
     },
     rowdata: {
-        paddingTop: 10,
-        paddingBottom: 2,
+        height: 60,
+        backgroundColor: '#000000'
     },
     rowdatatext: {
         color: 'gray',
         width: width,
+        paddingTop: 5,
+        paddingBottom: 2,
     },
 });
 
