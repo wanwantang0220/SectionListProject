@@ -61,7 +61,7 @@ export default class RecommendPage extends Component {
                         title="Loading..."
                         titleColor={theme.themeColor}/>}>
                 {this.contentSwiper()}
-                <Text style={{color: '#ffcd32', textAlign: 'center'}}>热门歌单推荐</Text>
+                <Text style={{color: '#ffcd32', textAlign: 'center',marginTop:10}}>热门歌单推荐</Text>
                 {this.contentView()}
             </ScrollView>
         )
@@ -79,15 +79,51 @@ export default class RecommendPage extends Component {
      */
     contentSwiper() {
 
-        var imgUrl = 'http://y.gtimg.cn/music/photo_new/T003R720x288M000003gXZ394C6bbc.jpg';
+        var imgUrl1 = 'http://y.gtimg.cn/music/photo_new/T003R720x288M000003gXZ394C6bbc.jpg';
+        var imgUrl2 = 'http://y.gtimg.cn/music/photo_new/T003R720x288M000002FZngy4ZQQbK.jpg';
+        var imgUrl3 = 'http://y.gtimg.cn/music/photo_new/T003R720x288M000004RHLR82eOc1C.jpg';
 
         if (!this.state.refreshing || this.state.loadedData) {
             return (
-                <Swiper style={{height: 200, horizontal: true, autoplay: true}}>
+                <Swiper style={{height: 150}}
+                        autoplay={true}
+                        dot={<View style={{
+                            backgroundColor: 'rgba(0,0,0,.5)',
+                            width: 8,
+                            height: 8,
+                            borderRadius: 4,
+                            marginLeft: 3,
+                            marginRight: 3,
+                            marginTop: 3,
+                            marginBottom: 3,
+                        }}/>}
+                        activeDot={<View style={{
+                            backgroundColor: '#ffcd32',
+                            width: 18,
+                            height: 8,
+                            borderRadius: 4,
+                            marginLeft: 3,
+                            marginRight: 3,
+                            marginTop: 3,
+                            marginBottom: 3
+                        }}/>}
+                        paginationStyle={{
+                            bottom: 5,   //小圆点的位置：距离底部5px   left: null, right: 10
+                        }}>
                     <View>
                         <Image
                             style={styles.image}
-                            source={{uri: {imgUrl}}}/>
+                            source={{uri: imgUrl1}}/>
+                    </View>
+                    <View>
+                        <Image
+                            style={styles.image}
+                            source={{uri: imgUrl2}}/>
+                    </View>
+                    <View>
+                        <Image
+                            style={styles.image}
+                            source={{uri: imgUrl3}}/>
                     </View>
                 </Swiper>
             )
@@ -163,7 +199,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: screenW,
-        height: 200
+        height: 200,
+        alignSelf: 'center'
 
     }
 });
