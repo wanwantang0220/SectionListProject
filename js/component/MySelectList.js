@@ -158,7 +158,7 @@ export default class MySelectList extends Component {
                 style={styles.rowView}
                 activeOpacity={0.85}
                 underlayColor={'black'}
-                onPress={() => this.props.navigate('SingerDetail')}>
+                onPress={() => this.props.navigate('SingerDetail',{ item: item })}>
                 <View style={[styles.rowdata, {flexDirection: 'row'}]}>
                     <Image style={[styles.circle]}
                            source={{uri: url}}/>
