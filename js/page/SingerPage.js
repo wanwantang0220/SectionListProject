@@ -40,11 +40,12 @@ export default class SingerPage extends Component {
     }
 
     render() {
-
+        const {navigate} = this.props.navigation;
         return (
             <MySelectList
                 onSelectCity={this.onSelectData.bind(this)}
                 dataSource={this.state.dataSource}
+                navigate = {navigate}
             />
         )
     }

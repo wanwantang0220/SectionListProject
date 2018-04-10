@@ -30,7 +30,7 @@ export default class MySelectList extends Component {
 
     static  propTypes = {
         allCityList: PropTypes.array,
-        onSelectCity: PropTypes.func
+        onSelectCity: PropTypes.func,
     }
 
     constructor(props) {
@@ -119,6 +119,7 @@ export default class MySelectList extends Component {
     }
 
     render() {
+
         return (
             <View style={styles.containerSelect}>
                 <View style={styles.listContainner}>
@@ -126,7 +127,7 @@ export default class MySelectList extends Component {
                         ref={listView => this.listView = listView}
                         contentContainerStyle={styles.contentContainer}
                         dataSource={this.state.dataSource}
-                        renderRow={this.renderListRow}
+                        renderRow={this.renderListRow.bind(this)}
                         renderSectionHeader={this.renderListSectionHeader}
                         enableEmptySections={true}
                         initialListSize={500}
@@ -149,18 +150,19 @@ export default class MySelectList extends Component {
 
 
     renderListRow(item, rowId) {
-        const url = 'https://y.gtimg.cn/music/photo_new/T001R300x300M000'+item.fsinger_mid+'.jpg';
+        const url = 'https://y.gtimg.cn/music/photo_new/T001R300x300M000' + item.fsinger_mid + '.jpg';
+
         return (
             <TouchableOpacity
                 key={'list_item_' + item.fsinger_id}
                 style={styles.rowView}
-                onPress={() => {
-                    this.itemClick(item)
-                }}>
-                <View style={[styles.rowdata,{flexDirection:'row'}]}>
+                activeOpacity={0.85}
+                underlayColor={'black'}
+                onPress={() => this.props.navigate('SingerDetail')}>
+                <View style={[styles.rowdata, {flexDirection: 'row'}]}>
                     <Image style={[styles.circle]}
                            source={{uri: url}}/>
-                    <Text style={[styles.rowdatatext,{marginLeft:10, marginTop:15}]}>{item.fsinger_name}</Text>
+                    <Text style={[styles.rowdatatext, {marginLeft: 10, marginTop: 15}]}>{item.fsinger_name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -168,6 +170,7 @@ export default class MySelectList extends Component {
 
     itemClick() {
         //this.props.nav.pop();
+        this.props.navigate('SingerDetail');
         console.log('itemClick')
     }
 
@@ -292,7 +295,7 @@ const styles = StyleSheet.create({
     sectionText: {
         color: '#a9a9a9',
         fontWeight: 'bold',
-        fontSize:14
+        fontSize: 14
     },
     rowView: {
         height: ROWHEIGHT,
@@ -311,18 +314,18 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 2,
     },
-    circle:{
+    circle: {
         // alignItems:'center',
         // justifyContent:'center',
         width: 55,
-        height:55,
-        backgroundColor:'#000000',
+        height: 55,
+        backgroundColor: '#000000',
         // borderColor:'green',
-        borderStyle:'solid',
-        borderRadius:100,
+        // borderStyle:'solid',
+        borderRadius: 100,
         // paddingBottom:2,
-        marginLeft:5,
-        marginTop:5,
+        marginLeft: 5,
+        marginTop: 5,
     }
 });
 
