@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import Toast, {DURATION} from 'react-native-easy-toast';
 
 const SECTIONHEIGHT = 30;
-const ROWHEIGHT = 40
+const ROWHEIGHT = 70
 var totalheight = [];//每个字母对应的城市和字母的总高度
 
 
@@ -149,6 +149,7 @@ export default class MySelectList extends Component {
 
 
     renderListRow(item, rowId) {
+        const url = 'https://y.gtimg.cn/music/photo_new/T001R300x300M000'+item.fsinger_mid+'.jpg';
         return (
             <TouchableOpacity
                 key={'list_item_' + item.fsinger_id}
@@ -157,9 +158,9 @@ export default class MySelectList extends Component {
                     this.itemClick(item)
                 }}>
                 <View style={[styles.rowdata,{flexDirection:'row'}]}>
-                    {/*<Image style={{width: 60, height: 60}}*/}
-                           {/*source={{uri: url}}/>*/}
-                    <Text style={styles.rowdatatext}>{item.fsinger_name}</Text>
+                    <Image style={[styles.circle]}
+                           source={{uri: url}}/>
+                    <Text style={[styles.rowdatatext,{marginLeft:10, marginTop:15}]}>{item.fsinger_name}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -295,13 +296,13 @@ const styles = StyleSheet.create({
     },
     rowView: {
         height: ROWHEIGHT,
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderBottomColor: '#ffcd32',
+        marginLeft: 90,
+        marginRight: 10,
+        // borderBottomColor: '#ffcd32',
         borderBottomWidth: 0.5,
     },
     rowdata: {
-        height: 60,
+        // height: 60,
         backgroundColor: '#000000'
     },
     rowdatatext: {
@@ -310,5 +311,18 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 2,
     },
+    circle:{
+        // alignItems:'center',
+        // justifyContent:'center',
+        width: 55,
+        height:55,
+        backgroundColor:'#000000',
+        // borderColor:'green',
+        borderStyle:'solid',
+        borderRadius:100,
+        // paddingBottom:2,
+        marginLeft:5,
+        marginTop:5,
+    }
 });
 
